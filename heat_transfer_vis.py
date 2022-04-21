@@ -90,15 +90,15 @@ def implicit_scheme(temperature_values, time_step, space_step, c_value):
             alpha[m] = B / (C - A * alpha[m - 1])
             beta[m] = (A * beta[m - 1] + F) / (C - A * alpha[m - 1])
 
-        for m in range(width, 0, -1):
+        for m in range(temperature_values.shape[1] - 1, 0, -1):
             temperature_values[n + 1][m - 1] = alpha[m - 1] * temperature_values[n + 1][m] + beta[m - 1]
 
     return temperature_values
 
 
 # функции начальных условий и граничных условий первого рода
-def gauss(x, alpha=5, median=2.5):
-    return np.exp(-alpha * (x * h - median) ** 2)
+def gauss(x, alpha=5, median=2.5, mesh_step=0.01):
+    return np.exp(-alpha * (x * mesh_step - median) ** 2)
 
 
 def one(x):
